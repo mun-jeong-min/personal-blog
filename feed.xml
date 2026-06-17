@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Panda Blog</title>
+  <link>https://mun-jeong-min.github.io/personal-blog/</link>
+  <description>Panda Blog RSS feed</description>
+  <lastBuildDate>Wed, 17 Jun 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>AI 에이전트 시대, 학습 매체는 무엇이 달라져야 할까</title>
+    <link>https://mun-jeong-min.github.io/personal-blog/posts/post.html</link>
+    <guid>https://mun-jeong-min.github.io/personal-blog/posts/post.html</guid>
+    <pubDate>Wed, 17 Jun 2026 00:00:00 GMT</pubDate>
+    <description>Andy Matuschak의 Why books don&#039;t work를 스터디하며, AI 에이전트 시대의 학습 매체가 어떻게 달라져야 하는지 생각해본 기록</description>
+  </item>
+</channel>
+</rss>

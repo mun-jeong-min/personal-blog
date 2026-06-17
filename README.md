@@ -12,9 +12,9 @@ python3 -m http.server 8080
 
 ## 새 글 추가
 
-1. `posts/my-post.html` 파일을 만듭니다.
-2. 일반 HTML 문서처럼 작성합니다.
-3. GitHub에 올리면 블로그 목록에 자동으로 추가됩니다.
+1. `templates/post-template.html`을 참고해서 `posts/my-post.html` 파일을 만듭니다.
+2. 일반 HTML 문서처럼 작성하고 `<head>`의 제목, 설명, 날짜, 태그, canonical URL을 바꿉니다.
+3. GitHub에 올리면 블로그 목록과 SEO 파일이 자동으로 갱신됩니다.
 
 목록 카드는 HTML의 `<head>` 안에 있는 메타 태그를 읽습니다.
 
@@ -29,6 +29,8 @@ python3 -m http.server 8080
     <meta name="date" content="2026-06-17">
     <meta name="tags" content="태그1, 태그2">
     <meta name="cover" content="https://images.unsplash.com/...">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mun-jeong-min.github.io/personal-blog/posts/my-post.html">
   </head>
   <body>
     <h1>글 제목</h1>
@@ -38,7 +40,21 @@ python3 -m http.server 8080
 ```
 
 목록에서 글을 누르면 `posts/my-post.html` 파일 자체가 새 탭에서 열립니다.
-로컬에서만 새 파일을 미리 보고 싶다면 `posts.json`에도 경로를 추가하세요. GitHub Pages에 올라간 뒤에는 GitHub 폴더 목록을 자동으로 읽습니다.
+
+## SEO 파일 갱신
+
+`posts/*.html`이 GitHub에 올라가면 GitHub Actions가 아래 파일을 자동 갱신합니다.
+
+- `posts.json`: 메인 화면 글 목록용
+- `sitemap.xml`: 검색엔진 크롤링용
+- `feed.xml`: RSS 피드
+- `index.html`: 검색엔진이 JavaScript 없이도 볼 수 있는 정적 글 링크
+
+로컬에서 직접 갱신하려면 아래 명령을 실행합니다.
+
+```sh
+node scripts/generate-seo.js
+```
 
 ## GitHub Pages 배포
 

@@ -4,11 +4,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Panda Blog 개인 블로그">
+    <meta name="robots" content="index, follow">
     <meta property="og:title" content="Panda Blog">
     <meta property="og:description" content="Panda Blog 개인 블로그">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mun-jeong-min.github.io/personal-blog/">
+    <meta property="og:site_name" content="Panda Blog">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Panda Blog">
+    <meta name="twitter:description" content="Panda Blog 개인 블로그">
     <title>Panda Blog</title>
+    <link rel="canonical" href="https://mun-jeong-min.github.io/personal-blog/">
+    <link rel="alternate" type="application/rss+xml" title="Panda Blog RSS" href="https://mun-jeong-min.github.io/personal-blog/feed.xml">
     <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Panda Blog",
+        "url": "https://mun-jeong-min.github.io/personal-blog/",
+        "inLanguage": "ko-KR"
+      }
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -65,7 +82,29 @@
           <div id="tagList" class="tag-list"></div>
         </aside>
         <div>
-          <div id="postList" class="post-grid" aria-live="polite"></div>
+          <div id="postList" class="post-grid" aria-live="polite">
+            <!-- SEO_POST_CARDS_START -->
+            <a class="post-card" href="posts/post.html" target="_blank" rel="noreferrer">
+              <div class="post-card-body">
+                <div class="post-meta">
+                  <time datetime="2026-06-17">2026년 6월 17일</time>
+                  <span>새 탭에서 열기</span>
+                </div>
+                <h3>AI 에이전트 시대, 학습 매체는 무엇이 달라져야 할까</h3>
+                <p>Andy Matuschak의 Why books don&#039;t work를 스터디하며, AI 에이전트 시대의 학습 매체가 어떻게 달라져야 하는지 생각해본 기록</p>
+                <div class="tags">
+                  <span class="tag">AI</span>
+                  <span class="tag">AI 에이전트</span>
+                  <span class="tag">학습</span>
+                  <span class="tag">교육</span>
+                  <span class="tag">지식관리</span>
+                  <span class="tag">문서화</span>
+                  <span class="tag">회고</span>
+                </div>
+              </div>
+            </a>
+            <!-- SEO_POST_CARDS_END -->
+          </div>
           <p id="emptyState" class="empty-state" hidden>아직 등록된 글이 없습니다.</p>
         </div>
       </section>

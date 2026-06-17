@@ -80,11 +80,22 @@ function renderFeaturedPost() {
 }
 
 async function loadPostPaths() {
-  const githubPaths = await loadGitHubPostPaths();
-  if (githubPaths.length > 0) return githubPaths;
+  const manifestPaths = await loadManifestPostPaths();
+  if (manifestPaths.length > 0) return manifestPaths;
 
-  const manifestResponse = await fetch("posts.json", { cache: "no-store" });
-  return manifestResponse.json();
+  return loadGitHubPostPaths();
+}
+
+async function loadManifestPostPaths() {
+  try {
+    const manifestResponse = await fetch("posts.json", { cache: "no-store" });
+    if (!manifestResponse.ok) return [];
+    const paths = await manifestResponse.json();
+    return Array.isArray(paths) ? paths : [];
+  } catch (error) {
+    console.warn("posts.json lookup failed. Falling back to GitHub.", error);
+    return [];
+  }
 }
 
 async function loadGitHubPostPaths() {

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mun-jeong-min.github.io/personal-blog/sitemap.xml
