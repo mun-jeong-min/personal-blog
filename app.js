@@ -13,7 +13,6 @@ const postList = document.querySelector("#postList");
 const tagList = document.querySelector("#tagList");
 const searchInput = document.querySelector("#searchInput");
 const emptyState = document.querySelector("#emptyState");
-const featuredPost = document.querySelector("#featuredPost");
 const postSummary = document.querySelector("#postSummary");
 const postCount = document.querySelector("#postCount");
 const tagCount = document.querySelector("#tagCount");
@@ -31,7 +30,6 @@ async function init() {
       .filter(Boolean)
       .sort((a, b) => new Date(b.date) - new Date(a.date));
     renderOverview();
-    renderFeaturedPost();
     renderTags();
     renderPosts();
   } catch (error) {
@@ -50,33 +48,7 @@ function renderOverview() {
     return;
   }
 
-  const latest = state.posts[0];
-  postSummary.textContent = `최근 글은 "${latest.title}"입니다. 글 목록에서 바로 열어볼 수 있습니다.`;
-}
-
-function renderFeaturedPost() {
-  const latest = state.posts[0];
-
-  if (!latest) {
-    featuredPost.hidden = true;
-    featuredPost.innerHTML = "";
-    return;
-  }
-
-  featuredPost.hidden = false;
-  featuredPost.innerHTML = `
-    <div>
-      <p class="eyebrow">Latest</p>
-      <h2>${escapeHtml(latest.title)}</h2>
-      <p>${escapeHtml(latest.description)}</p>
-      <div class="post-meta">
-        <time datetime="${escapeAttribute(latest.date)}">${formatDate(latest.date)}</time>
-        ${latest.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
-      </div>
-      <a class="primary-button" href="${escapeAttribute(latest.path)}" target="_blank" rel="noreferrer">새 탭에서 읽기</a>
-    </div>
-    ${latest.cover ? `<img src="${escapeAttribute(latest.cover)}" alt="">` : ""}
-  `;
+  postSummary.textContent = "최근 글부터 차례대로 정리해 둔 글 목록입니다.";
 }
 
 async function loadPostPaths() {
@@ -211,16 +183,17 @@ function renderPosts() {
     state.posts.length === 0
       ? "아직 등록된 글이 없습니다. posts 폴더에 HTML 파일을 올리면 자동으로 목록에 표시됩니다."
       : "검색 조건에 맞는 글이 없습니다.";
-  postList.innerHTML = filtered.map(renderPostCard).join("");
+  postList.innerHTML = filtered.map((post, index) => renderPostCard(post, index === 0 && state.selectedTag === "전체" && state.query.trim() === "")).join("");
 }
 
-function renderPostCard(post) {
+function renderPostCard(post, isLatest = false) {
   return `
     <a class="post-card" href="${escapeAttribute(post.path)}" target="_blank" rel="noreferrer" data-slug="${escapeHtml(post.slug)}">
       ${post.cover ? `<img src="${escapeAttribute(post.cover)}" alt="">` : ""}
       <div class="post-card-body">
         <div class="post-meta">
           <time datetime="${escapeAttribute(post.date)}">${formatDate(post.date)}</time>
+          ${isLatest ? `<span class="latest-badge">최신</span>` : ""}
           <span>새 탭에서 열기</span>
         </div>
         <h3>${escapeHtml(post.title)}</h3>

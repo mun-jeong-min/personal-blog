@@ -147,19 +147,20 @@ function updateIndexCards(posts) {
 
   const before = index.slice(0, start + CARD_START.length);
   const after = index.slice(end);
-  const cards = posts.length === 0 ? "" : `\n${posts.map(renderCard).join("\n")}\n            `;
+  const cards = posts.length === 0 ? "" : `\n${posts.map((post, index) => renderCard(post, index === 0)).join("\n")}\n            `;
   fs.writeFileSync(INDEX_PATH, `${before}${cards}${after}`);
 }
 
-function renderCard(post) {
+function renderCard(post, isLatest) {
   const tags = post.tags.map((tag) => `                  <span class="tag">${escapeHtml(tag)}</span>`).join("\n");
   const image = post.cover ? `\n              <img src="${escapeHtml(post.cover)}" alt="">` : "";
+  const latest = isLatest ? `                  <span class="latest-badge">최신</span>\n` : "";
 
   return `            <a class="post-card" href="${escapeHtml(post.path)}" target="_blank" rel="noreferrer">${image}
               <div class="post-card-body">
                 <div class="post-meta">
                   <time datetime="${escapeHtml(post.date)}">${formatKoreanDate(post.date)}</time>
-                  <span>새 탭에서 열기</span>
+${latest}                  <span>새 탭에서 열기</span>
                 </div>
                 <h3>${escapeHtml(post.title)}</h3>
                 <p>${escapeHtml(post.description)}</p>

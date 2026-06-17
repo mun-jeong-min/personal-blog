@@ -49,6 +49,10 @@
           <p class="eyebrow">Posts</p>
           <h1 id="intro-title">Panda Blog</h1>
           <p id="postSummary">글 목록을 불러오는 중입니다.</p>
+          <div class="home-search" role="search">
+            <label for="searchInput">글 검색</label>
+            <input id="searchInput" type="search" placeholder="제목, 설명, 태그로 검색">
+          </div>
         </div>
         <div class="post-stats" aria-label="글 현황">
           <div>
@@ -63,16 +67,10 @@
         </div>
       </section>
 
-      <section id="featuredPost" class="featured-post" aria-label="최근 글" hidden></section>
-
       <section class="section-bar" id="posts" aria-labelledby="posts-title">
         <div>
           <p class="eyebrow">Archive</p>
           <h2 id="posts-title">전체 글</h2>
-        </div>
-        <div class="toolbar" role="search">
-          <label for="searchInput">검색</label>
-          <input id="searchInput" type="search" placeholder="제목, 설명, 태그">
         </div>
       </section>
 
@@ -88,6 +86,7 @@
               <div class="post-card-body">
                 <div class="post-meta">
                   <time datetime="2026-06-17">2026년 6월 17일</time>
+                  <span class="latest-badge">최신</span>
                   <span>새 탭에서 열기</span>
                 </div>
                 <h3>AI 에이전트 시대, 학습 매체는 무엇이 달라져야 할까</h3>
