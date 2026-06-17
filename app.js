@@ -1,3 +1,8 @@
+const GITHUB_OWNER = "mun-jeong-min";
+const GITHUB_REPO = "personal-blog";
+const GITHUB_BRANCH = "main";
+const POSTS_DIRECTORY = "posts";
+
 const state = {
   posts: [],
   selectedTag: "전체",
@@ -8,7 +13,6 @@ const postList = document.querySelector("#postList");
 const tagList = document.querySelector("#tagList");
 const searchInput = document.querySelector("#searchInput");
 const emptyState = document.querySelector("#emptyState");
-const postView = document.querySelector("#postView");
 const year = document.querySelector("#year");
 
 year.textContent = new Date().getFullYear();
@@ -17,18 +21,46 @@ init();
 
 async function init() {
   try {
-    const manifestResponse = await fetch("posts.json", { cache: "no-store" });
-    const paths = await manifestResponse.json();
+    const paths = await loadPostPaths();
     const posts = await Promise.all(paths.map(loadPost));
     state.posts = posts
       .filter(Boolean)
       .sort((a, b) => new Date(b.date) - new Date(a.date));
     renderTags();
     renderPosts();
-    renderPostFromUrl();
   } catch (error) {
     postList.innerHTML = `<p class="empty-state">글 목록을 불러오지 못했습니다.</p>`;
     console.error(error);
+  }
+}
+
+async function loadPostPaths() {
+  const githubPaths = await loadGitHubPostPaths();
+  if (githubPaths.length > 0) return githubPaths;
+
+  const manifestResponse = await fetch("posts.json", { cache: "no-store" });
+  return manifestResponse.json();
+}
+
+async function loadGitHubPostPaths() {
+  const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${POSTS_DIRECTORY}?ref=${GITHUB_BRANCH}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      headers: { Accept: "application/vnd.github+json" },
+      cache: "no-store",
+    });
+    if (!response.ok) return [];
+
+    const items = await response.json();
+    if (!Array.isArray(items)) return [];
+
+    return items
+      .filter((item) => item.type === "file" && item.name.toLowerCase().endsWith(".html"))
+      .map((item) => `${POSTS_DIRECTORY}/${item.name}`);
+  } catch (error) {
+    console.warn("GitHub posts directory lookup failed. Falling back to posts.json.", error);
+    return [];
   }
 }
 
@@ -37,7 +69,7 @@ async function loadPost(path) {
   if (!response.ok) return null;
 
   const raw = await response.text();
-  const { meta, body } = parseFrontMatter(raw);
+  const meta = parseHtmlMeta(raw);
   const slug = path.split("/").pop().replace(/\.[^.]+$/, "");
 
   return {
@@ -48,24 +80,32 @@ async function loadPost(path) {
     description: meta.description || "",
     tags: splitTags(meta.tags),
     cover: meta.cover || "",
-    body,
   };
 }
 
-function parseFrontMatter(raw) {
-  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
-  if (!match) return { meta: {}, body: raw };
+function parseHtmlMeta(raw) {
+  const document = new DOMParser().parseFromString(raw, "text/html");
+  const title = readMeta(document, "title") || document.querySelector("title")?.textContent || document.querySelector("h1")?.textContent;
+  const description = readMeta(document, "description") || document.querySelector("p")?.textContent;
+  const date = readMeta(document, "date") || document.querySelector("time[datetime]")?.getAttribute("datetime") || "";
+  const tags = readMeta(document, "tags") || "";
+  const cover = readMeta(document, "cover") || readProperty(document, "og:image") || "";
 
-  const meta = {};
-  match[1].split("\n").forEach((line) => {
-    const separator = line.indexOf(":");
-    if (separator === -1) return;
-    const key = line.slice(0, separator).trim();
-    const value = line.slice(separator + 1).trim();
-    meta[key] = value;
-  });
+  return {
+    title: title?.trim(),
+    description: description?.trim(),
+    date: date.trim(),
+    tags,
+    cover,
+  };
+}
 
-  return { meta, body: match[2].trim() };
+function readMeta(document, name) {
+  return document.querySelector(`meta[name="${name}"]`)?.getAttribute("content") || "";
+}
+
+function readProperty(document, property) {
+  return document.querySelector(`meta[property="${property}"]`)?.getAttribute("content") || "";
 }
 
 function splitTags(value) {
@@ -111,11 +151,12 @@ function renderPosts() {
 
 function renderPostCard(post) {
   return `
-    <a class="post-card" href="#post-${encodeURIComponent(post.slug)}" data-slug="${escapeHtml(post.slug)}">
+    <a class="post-card" href="${escapeAttribute(post.path)}" target="_blank" rel="noreferrer" data-slug="${escapeHtml(post.slug)}">
       ${post.cover ? `<img src="${escapeAttribute(post.cover)}" alt="">` : ""}
       <div class="post-card-body">
         <div class="post-meta">
           <time datetime="${escapeAttribute(post.date)}">${formatDate(post.date)}</time>
+          <span>새 탭에서 열기</span>
         </div>
         <h3>${escapeHtml(post.title)}</h3>
         <p>${escapeHtml(post.description)}</p>
@@ -123,30 +164,6 @@ function renderPostCard(post) {
       </div>
     </a>
   `;
-}
-
-function renderPostFromUrl() {
-  const slug = decodeURIComponent(location.hash.replace("#post-", ""));
-  const post = state.posts.find((item) => item.slug === slug);
-
-  if (!post) {
-    postView.hidden = true;
-    return;
-  }
-
-  postView.hidden = false;
-  postView.innerHTML = `
-    <div class="post-view-inner">
-      <div>
-        <p class="eyebrow">${formatDate(post.date)}</p>
-        <h1>${escapeHtml(post.title)}</h1>
-        <div class="post-meta">${post.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
-        <div class="post-content">${post.body}</div>
-      </div>
-      ${post.cover ? `<img src="${escapeAttribute(post.cover)}" alt="">` : ""}
-    </div>
-  `;
-  postView.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function formatDate(value) {
@@ -175,5 +192,3 @@ searchInput.addEventListener("input", (event) => {
   state.query = event.target.value;
   renderPosts();
 });
-
-window.addEventListener("hashchange", renderPostFromUrl);
