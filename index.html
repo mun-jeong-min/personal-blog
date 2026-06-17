@@ -27,28 +27,31 @@
     </header>
 
     <main>
-      <section class="intro" aria-labelledby="intro-title">
-        <div class="intro-copy">
-          <p class="eyebrow">Personal blog</p>
+      <section class="blog-home" aria-labelledby="intro-title">
+        <div class="blog-heading">
+          <p class="eyebrow">Posts</p>
           <h1 id="intro-title">Panda Blog</h1>
-          <p>
-            개인적인 기록과 생각을 차곡차곡 모아두는 공간입니다.
-            아직 첫 글을 기다리고 있습니다.
-          </p>
-          <div class="intro-actions">
-            <a class="primary-button" href="#posts">최근 글 보기</a>
-            <a class="secondary-button" href="#about">운영 방식</a>
-          </div>
+          <p id="postSummary">글 목록을 불러오는 중입니다.</p>
         </div>
-        <div class="feature-panel" aria-label="블로그 요약">
-          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80" alt="노트북 화면에 코드가 열려 있는 작업 책상">
+        <div class="post-stats" aria-label="글 현황">
+          <div>
+            <strong id="postCount">0</strong>
+            <span>글</span>
+          </div>
+          <div>
+            <strong id="tagCount">0</strong>
+            <span>키워드</span>
+          </div>
+          <a href="#posts">전체 글 보기</a>
         </div>
       </section>
 
+      <section id="featuredPost" class="featured-post" aria-label="최근 글" hidden></section>
+
       <section class="section-bar" id="posts" aria-labelledby="posts-title">
         <div>
-          <p class="eyebrow">Latest posts</p>
-          <h2 id="posts-title">최근 글</h2>
+          <p class="eyebrow">Archive</p>
+          <h2 id="posts-title">전체 글</h2>
         </div>
         <div class="toolbar" role="search">
           <label for="searchInput">검색</label>

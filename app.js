@@ -13,6 +13,10 @@ const postList = document.querySelector("#postList");
 const tagList = document.querySelector("#tagList");
 const searchInput = document.querySelector("#searchInput");
 const emptyState = document.querySelector("#emptyState");
+const featuredPost = document.querySelector("#featuredPost");
+const postSummary = document.querySelector("#postSummary");
+const postCount = document.querySelector("#postCount");
+const tagCount = document.querySelector("#tagCount");
 const year = document.querySelector("#year");
 
 year.textContent = new Date().getFullYear();
@@ -26,12 +30,53 @@ async function init() {
     state.posts = posts
       .filter(Boolean)
       .sort((a, b) => new Date(b.date) - new Date(a.date));
+    renderOverview();
+    renderFeaturedPost();
     renderTags();
     renderPosts();
   } catch (error) {
     postList.innerHTML = `<p class="empty-state">글 목록을 불러오지 못했습니다.</p>`;
     console.error(error);
   }
+}
+
+function renderOverview() {
+  const tags = new Set(state.posts.flatMap((post) => post.tags));
+  postCount.textContent = state.posts.length;
+  tagCount.textContent = tags.size;
+
+  if (state.posts.length === 0) {
+    postSummary.textContent = "아직 등록된 글이 없습니다. posts 폴더에 HTML 글을 올리면 이 화면에 바로 정리됩니다.";
+    return;
+  }
+
+  const latest = state.posts[0];
+  postSummary.textContent = `최근 글은 "${latest.title}"입니다. 글 목록에서 바로 열어볼 수 있습니다.`;
+}
+
+function renderFeaturedPost() {
+  const latest = state.posts[0];
+
+  if (!latest) {
+    featuredPost.hidden = true;
+    featuredPost.innerHTML = "";
+    return;
+  }
+
+  featuredPost.hidden = false;
+  featuredPost.innerHTML = `
+    <div>
+      <p class="eyebrow">Latest</p>
+      <h2>${escapeHtml(latest.title)}</h2>
+      <p>${escapeHtml(latest.description)}</p>
+      <div class="post-meta">
+        <time datetime="${escapeAttribute(latest.date)}">${formatDate(latest.date)}</time>
+        ${latest.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
+      </div>
+      <a class="primary-button" href="${escapeAttribute(latest.path)}" target="_blank" rel="noreferrer">새 탭에서 읽기</a>
+    </div>
+    ${latest.cover ? `<img src="${escapeAttribute(latest.cover)}" alt="">` : ""}
+  `;
 }
 
 async function loadPostPaths() {
@@ -117,6 +162,11 @@ function splitTags(value) {
 }
 
 function renderTags() {
+  if (state.posts.length === 0) {
+    tagList.innerHTML = `<span class="tag-hint">글을 올리면 키워드가 표시됩니다.</span>`;
+    return;
+  }
+
   const tags = ["전체", ...new Set(state.posts.flatMap((post) => post.tags))];
   tagList.innerHTML = tags
     .map(
@@ -146,6 +196,10 @@ function renderPosts() {
   });
 
   emptyState.hidden = filtered.length > 0;
+  emptyState.textContent =
+    state.posts.length === 0
+      ? "아직 등록된 글이 없습니다. posts 폴더에 HTML 파일을 올리면 자동으로 목록에 표시됩니다."
+      : "검색 조건에 맞는 글이 없습니다.";
   postList.innerHTML = filtered.map(renderPostCard).join("");
 }
 
