@@ -28,6 +28,7 @@
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#posts">글 목록으로 건너뛰기</a>
     <header class="site-header">
       <a class="brand" href="./" aria-label="홈으로 이동">
         <span class="brand-mark">P</span>
@@ -39,6 +40,7 @@
       <nav class="nav" aria-label="주요 메뉴">
         <a href="#posts">글</a>
         <a href="#about">소개</a>
+        <a href="feed.xml">RSS</a>
         <a href="https://github.com/mun-jeong-min/personal-blog" target="_blank" rel="noreferrer">GitHub</a>
       </nav>
     </header>
@@ -51,7 +53,10 @@
           <p id="postSummary">글 목록을 불러오는 중입니다.</p>
           <div class="home-search" role="search">
             <label for="searchInput">글 검색</label>
-            <input id="searchInput" type="search" placeholder="제목, 설명, 태그로 검색">
+            <div class="search-box">
+              <input id="searchInput" type="search" placeholder="제목, 설명, 태그로 검색">
+              <button id="clearSearch" type="button" hidden>지우기</button>
+            </div>
           </div>
         </div>
         <div class="post-stats" aria-label="글 현황">
@@ -87,6 +92,7 @@
                 <div class="post-meta">
                   <time datetime="2026-06-17">2026년 6월 17일</time>
                   <span class="latest-badge">최신</span>
+                  <span>5분 읽기</span>
                   <span>새 탭에서 열기</span>
                 </div>
                 <h3>AI 에이전트 시대, 학습 매체는 무엇이 달라져야 할까</h3>
@@ -126,7 +132,11 @@
 
     <footer class="footer">
       <span>© <span id="year"></span> Panda Blog</span>
-      <a href="#top" aria-label="맨 위로 이동">Top</a>
+      <span>
+        <a href="feed.xml">RSS</a>
+        <a href="sitemap.xml">Sitemap</a>
+        <a href="#top" aria-label="맨 위로 이동">Top</a>
+      </span>
     </footer>
 
     <script src="app.js"></script>

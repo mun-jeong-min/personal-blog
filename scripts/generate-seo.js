@@ -34,6 +34,7 @@ function readPosts() {
       const date = readMeta(html, "date") || toDate(stat.mtime);
       const tags = splitTags(readMeta(html, "tags"));
       const cover = readMeta(html, "cover") || readProperty(html, "og:image") || "";
+      const readingTime = estimateReadingTime(html);
 
       return {
         path: relativePath,
@@ -44,6 +45,7 @@ function readPosts() {
         lastmod: toDate(stat.mtime),
         tags,
         cover,
+        readingTime,
       };
     })
     .sort((a, b) => new Date(b.date) - new Date(a.date) || a.path.localeCompare(b.path));
@@ -160,7 +162,8 @@ function renderCard(post, isLatest) {
               <div class="post-card-body">
                 <div class="post-meta">
                   <time datetime="${escapeHtml(post.date)}">${formatKoreanDate(post.date)}</time>
-${latest}                  <span>새 탭에서 열기</span>
+${latest}                  <span>${post.readingTime}분 읽기</span>
+                  <span>새 탭에서 열기</span>
                 </div>
                 <h3>${escapeHtml(post.title)}</h3>
                 <p>${escapeHtml(post.description)}</p>
@@ -192,6 +195,17 @@ function formatKoreanDate(value) {
 
 function stripTags(value) {
   return String(value).replace(/<[^>]*>/g, "");
+}
+
+function estimateReadingTime(html) {
+  const text = html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!text) return 1;
+  return Math.max(1, Math.ceil(text.length / 700));
 }
 
 function decodeEntities(value) {

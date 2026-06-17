@@ -12,6 +12,7 @@ const state = {
 const postList = document.querySelector("#postList");
 const tagList = document.querySelector("#tagList");
 const searchInput = document.querySelector("#searchInput");
+const clearSearch = document.querySelector("#clearSearch");
 const emptyState = document.querySelector("#emptyState");
 const postSummary = document.querySelector("#postSummary");
 const postCount = document.querySelector("#postCount");
@@ -108,6 +109,7 @@ async function loadPost(path) {
     description: meta.description || "",
     tags: splitTags(meta.tags),
     cover: meta.cover || "",
+    readingTime: estimateReadingTime(raw),
   };
 }
 
@@ -183,6 +185,7 @@ function renderPosts() {
     state.posts.length === 0
       ? "아직 등록된 글이 없습니다. posts 폴더에 HTML 파일을 올리면 자동으로 목록에 표시됩니다."
       : "검색 조건에 맞는 글이 없습니다.";
+  clearSearch.hidden = state.query.trim() === "";
   postList.innerHTML = filtered.map((post, index) => renderPostCard(post, index === 0 && state.selectedTag === "전체" && state.query.trim() === "")).join("");
 }
 
@@ -194,6 +197,7 @@ function renderPostCard(post, isLatest = false) {
         <div class="post-meta">
           <time datetime="${escapeAttribute(post.date)}">${formatDate(post.date)}</time>
           ${isLatest ? `<span class="latest-badge">최신</span>` : ""}
+          <span>${post.readingTime}분 읽기</span>
           <span>새 탭에서 열기</span>
         </div>
         <h3>${escapeHtml(post.title)}</h3>
@@ -230,3 +234,21 @@ searchInput.addEventListener("input", (event) => {
   state.query = event.target.value;
   renderPosts();
 });
+
+clearSearch.addEventListener("click", () => {
+  state.query = "";
+  searchInput.value = "";
+  searchInput.focus();
+  renderPosts();
+});
+
+function estimateReadingTime(html) {
+  const text = html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!text) return 1;
+  return Math.max(1, Math.ceil(text.length / 700));
+}
