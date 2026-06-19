@@ -3,17 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Panda Blog 개인 블로그">
+    <meta name="description" content="AI, 학습, 기술 경험을 차분히 기록하는 Panda Blog 개인 블로그">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Panda Blog">
-    <meta property="og:description" content="Panda Blog 개인 블로그">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:title" content="Panda Blog | AI와 학습을 기록하는 개인 블로그">
+    <meta property="og:description" content="AI, 학습, 기술 경험을 차분히 기록하는 Panda Blog 개인 블로그">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mun-jeong-min.github.io/personal-blog/">
     <meta property="og:site_name" content="Panda Blog">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Panda Blog">
-    <meta name="twitter:description" content="Panda Blog 개인 블로그">
-    <title>Panda Blog</title>
+    <meta name="twitter:title" content="Panda Blog | AI와 학습을 기록하는 개인 블로그">
+    <meta name="twitter:description" content="AI, 학습, 기술 경험을 차분히 기록하는 Panda Blog 개인 블로그">
+    <title>Panda Blog | AI와 학습을 기록하는 개인 블로그</title>
     <link rel="canonical" href="https://mun-jeong-min.github.io/personal-blog/">
     <link rel="alternate" type="application/rss+xml" title="Panda Blog RSS" href="https://mun-jeong-min.github.io/personal-blog/feed.xml">
     <link rel="stylesheet" href="styles.css">
@@ -22,8 +23,18 @@
         "@context": "https://schema.org",
         "@type": "Blog",
         "name": "Panda Blog",
+        "description": "AI, 학습, 기술 경험을 차분히 기록하는 개인 블로그",
         "url": "https://mun-jeong-min.github.io/personal-blog/",
-        "inLanguage": "ko-KR"
+        "inLanguage": "ko-KR",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Panda Blog"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://mun-jeong-min.github.io/personal-blog/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
       }
     </script>
   </head>
@@ -54,7 +65,7 @@
           <div class="home-search" role="search">
             <label for="searchInput">글 검색</label>
             <div class="search-box">
-              <input id="searchInput" type="search" placeholder="제목, 설명, 태그로 검색">
+              <input id="searchInput" type="search" placeholder="제목, 설명으로 검색">
               <button id="clearSearch" type="button" hidden>지우기</button>
             </div>
           </div>
@@ -63,10 +74,6 @@
           <div>
             <strong id="postCount">0</strong>
             <span>글</span>
-          </div>
-          <div>
-            <strong id="tagCount">0</strong>
-            <span>키워드</span>
           </div>
           <a href="#posts">전체 글 보기</a>
         </div>
@@ -80,13 +87,8 @@
       </section>
 
       <section class="layout">
-        <aside class="tag-panel" aria-labelledby="tag-title">
-          <h2 id="tag-title">키워드</h2>
-          <div id="tagList" class="tag-list"></div>
-        </aside>
-        <div>
-          <div id="postList" class="post-grid" aria-live="polite">
-            <!-- SEO_POST_CARDS_START -->
+        <div id="postList" class="post-grid" aria-live="polite">
+          <!-- SEO_POST_CARDS_START -->
             <a class="post-card" href="posts/ai-alignment-mutual-suspicion.html" target="_blank" rel="noreferrer">
               <div class="post-card-body">
                 <div class="post-meta">
@@ -97,15 +99,6 @@
                 </div>
                 <h3>AI를 잘 쓴다는 건, AI를 잘 의심한다는 것</h3>
                 <p>The Alignment Problem을 스터디하며, AI 에이전트를 구현 도구에서 같이 고민하는 비서이자 친구처럼 쓰게 된 변화와 AI를 의심하는 태도에 대해 쓴 회고</p>
-                <div class="tags">
-                  <span class="tag">AI</span>
-                  <span class="tag">AI 에이전트</span>
-                  <span class="tag">AI 정렬</span>
-                  <span class="tag">The Alignment Problem</span>
-                  <span class="tag">AX</span>
-                  <span class="tag">코덱스</span>
-                  <span class="tag">회고</span>
-                </div>
               </div>
             </a>
             <a class="post-card" href="posts/post.html" target="_blank" rel="noreferrer">
@@ -117,21 +110,11 @@
                 </div>
                 <h3>AI 에이전트 시대, 학습 매체는 무엇이 달라져야 할까</h3>
                 <p>Andy Matuschak의 Why books don&#039;t work를 스터디하며, AI 에이전트 시대의 학습 매체가 어떻게 달라져야 하는지 생각해본 기록</p>
-                <div class="tags">
-                  <span class="tag">AI</span>
-                  <span class="tag">AI 에이전트</span>
-                  <span class="tag">학습</span>
-                  <span class="tag">교육</span>
-                  <span class="tag">지식관리</span>
-                  <span class="tag">문서화</span>
-                  <span class="tag">회고</span>
-                </div>
               </div>
             </a>
             <!-- SEO_POST_CARDS_END -->
-          </div>
-          <p id="emptyState" class="empty-state" hidden>아직 등록된 글이 없습니다.</p>
         </div>
+        <p id="emptyState" class="empty-state" hidden>아직 등록된 글이 없습니다.</p>
       </section>
 
       <section class="about" id="about" aria-labelledby="about-title">

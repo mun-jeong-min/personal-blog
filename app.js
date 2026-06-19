@@ -5,21 +5,20 @@ const POSTS_DIRECTORY = "posts";
 
 const state = {
   posts: [],
-  selectedTag: "전체",
   query: "",
 };
 
 const postList = document.querySelector("#postList");
-const tagList = document.querySelector("#tagList");
 const searchInput = document.querySelector("#searchInput");
 const clearSearch = document.querySelector("#clearSearch");
 const emptyState = document.querySelector("#emptyState");
 const postSummary = document.querySelector("#postSummary");
 const postCount = document.querySelector("#postCount");
-const tagCount = document.querySelector("#tagCount");
 const year = document.querySelector("#year");
 
 year.textContent = new Date().getFullYear();
+state.query = new URLSearchParams(window.location.search).get("q") || "";
+searchInput.value = state.query;
 
 init();
 
@@ -31,7 +30,6 @@ async function init() {
       .filter(Boolean)
       .sort((a, b) => new Date(b.date) - new Date(a.date));
     renderOverview();
-    renderTags();
     renderPosts();
   } catch (error) {
     postList.innerHTML = `<p class="empty-state">글 목록을 불러오지 못했습니다.</p>`;
@@ -40,9 +38,7 @@ async function init() {
 }
 
 function renderOverview() {
-  const tags = new Set(state.posts.flatMap((post) => post.tags));
   postCount.textContent = state.posts.length;
-  tagCount.textContent = tags.size;
 
   if (state.posts.length === 0) {
     postSummary.textContent = "아직 등록된 글이 없습니다. posts 폴더에 HTML 글을 올리면 이 화면에 바로 정리됩니다.";
@@ -107,7 +103,6 @@ async function loadPost(path) {
     title: meta.title || slug,
     date: meta.date || "",
     description: meta.description || "",
-    tags: splitTags(meta.tags),
     cover: meta.cover || "",
     readingTime: estimateReadingTime(raw),
   };
@@ -118,14 +113,12 @@ function parseHtmlMeta(raw) {
   const title = readMeta(document, "title") || document.querySelector("title")?.textContent || document.querySelector("h1")?.textContent;
   const description = readMeta(document, "description") || document.querySelector("p")?.textContent;
   const date = readMeta(document, "date") || document.querySelector("time[datetime]")?.getAttribute("datetime") || "";
-  const tags = readMeta(document, "tags") || "";
   const cover = readMeta(document, "cover") || readProperty(document, "og:image") || "";
 
   return {
     title: title?.trim(),
     description: description?.trim(),
     date: date.trim(),
-    tags,
     cover,
   };
 }
@@ -138,46 +131,11 @@ function readProperty(document, property) {
   return document.querySelector(`meta[property="${property}"]`)?.getAttribute("content") || "";
 }
 
-function splitTags(value) {
-  if (!value) return [];
-  return value
-    .split(",")
-    .map((tag) => tag.trim())
-    .filter(Boolean);
-}
-
-function renderTags() {
-  if (state.posts.length === 0) {
-    tagList.innerHTML = `<span class="tag-hint">글을 올리면 키워드가 표시됩니다.</span>`;
-    return;
-  }
-
-  const tags = ["전체", ...new Set(state.posts.flatMap((post) => post.tags))];
-  tagList.innerHTML = tags
-    .map(
-      (tag) => `
-        <button class="tag-button" type="button" aria-pressed="${tag === state.selectedTag}" data-tag="${escapeHtml(tag)}">
-          ${escapeHtml(tag)}
-        </button>
-      `,
-    )
-    .join("");
-
-  tagList.querySelectorAll("button").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.selectedTag = button.dataset.tag;
-      renderTags();
-      renderPosts();
-    });
-  });
-}
-
 function renderPosts() {
   const filtered = state.posts.filter((post) => {
-    const matchesTag = state.selectedTag === "전체" || post.tags.includes(state.selectedTag);
-    const haystack = `${post.title} ${post.description} ${post.tags.join(" ")}`.toLowerCase();
+    const haystack = `${post.title} ${post.description}`.toLowerCase();
     const matchesQuery = haystack.includes(state.query.toLowerCase().trim());
-    return matchesTag && matchesQuery;
+    return matchesQuery;
   });
 
   emptyState.hidden = filtered.length > 0;
@@ -186,7 +144,7 @@ function renderPosts() {
       ? "아직 등록된 글이 없습니다. posts 폴더에 HTML 파일을 올리면 자동으로 목록에 표시됩니다."
       : "검색 조건에 맞는 글이 없습니다.";
   clearSearch.hidden = state.query.trim() === "";
-  postList.innerHTML = filtered.map((post, index) => renderPostCard(post, index === 0 && state.selectedTag === "전체" && state.query.trim() === "")).join("");
+  postList.innerHTML = filtered.map((post, index) => renderPostCard(post, index === 0 && state.query.trim() === "")).join("");
 }
 
 function renderPostCard(post, isLatest = false) {
@@ -202,7 +160,6 @@ function renderPostCard(post, isLatest = false) {
         </div>
         <h3>${escapeHtml(post.title)}</h3>
         <p>${escapeHtml(post.description)}</p>
-        <div class="tags">${post.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
       </div>
     </a>
   `;

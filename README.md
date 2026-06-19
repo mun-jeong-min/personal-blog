@@ -13,10 +13,10 @@ python3 -m http.server 8080
 ## 새 글 추가
 
 1. `templates/post-template.html`을 참고해서 `posts/my-post.html` 파일을 만듭니다.
-2. 일반 HTML 문서처럼 작성하고 `<head>`의 제목, 설명, 날짜, 태그, canonical URL을 바꿉니다.
+2. 일반 HTML 문서처럼 작성하고 `<head>`의 제목, 설명, 날짜, cover, canonical URL을 바꿉니다.
 3. GitHub에 올리면 블로그 목록과 SEO 파일이 자동으로 갱신됩니다.
 
-목록 카드는 HTML의 `<head>` 안에 있는 메타 태그를 읽습니다.
+목록 카드는 HTML의 `<head>` 안에 있는 메타 정보를 읽습니다.
 
 ```html
 <!doctype html>
@@ -27,7 +27,6 @@ python3 -m http.server 8080
     <title>글 제목</title>
     <meta name="description" content="목록에 보일 짧은 설명">
     <meta name="date" content="2026-06-17">
-    <meta name="tags" content="태그1, 태그2">
     <meta name="cover" content="https://images.unsplash.com/...">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://mun-jeong-min.github.io/personal-blog/posts/my-post.html">

@@ -32,7 +32,6 @@ function readPosts() {
       const title = readTitle(html) || file.replace(/\.html$/i, "");
       const description = readMeta(html, "description") || "";
       const date = readMeta(html, "date") || toDate(stat.mtime);
-      const tags = splitTags(readMeta(html, "tags"));
       const cover = readMeta(html, "cover") || readProperty(html, "og:image") || "";
       const readingTime = estimateReadingTime(html);
 
@@ -43,7 +42,6 @@ function readPosts() {
         description,
         date,
         lastmod: toDate(stat.mtime),
-        tags,
         cover,
         readingTime,
       };
@@ -71,22 +69,14 @@ function readProperty(html, property) {
 }
 
 function findMetaTag(html, attribute, value) {
-  const tags = html.match(/<meta\b[^>]*>/gi) || [];
-  return tags.find((tag) => readAttribute(tag, attribute).toLowerCase() === value.toLowerCase()) || "";
+  const metaTags = html.match(/<meta\b[^>]*>/gi) || [];
+  return metaTags.find((tag) => readAttribute(tag, attribute).toLowerCase() === value.toLowerCase()) || "";
 }
 
 function readAttribute(tag, attribute) {
   const escaped = escapeRegex(attribute);
   const match = tag.match(new RegExp(`\\b${escaped}\\s*=\\s*(["'])(.*?)\\1`, "i"));
   return match ? match[2] : "";
-}
-
-function splitTags(value) {
-  if (!value) return [];
-  return value
-    .split(",")
-    .map((tag) => tag.trim())
-    .filter(Boolean);
 }
 
 function writeJson(file, value) {
@@ -154,7 +144,6 @@ function updateIndexCards(posts) {
 }
 
 function renderCard(post, isLatest) {
-  const tags = post.tags.map((tag) => `                  <span class="tag">${escapeHtml(tag)}</span>`).join("\n");
   const image = post.cover ? `\n              <img src="${escapeHtml(post.cover)}" alt="">` : "";
   const latest = isLatest ? `                  <span class="latest-badge">최신</span>\n` : "";
 
@@ -167,9 +156,6 @@ ${latest}                  <span>${post.readingTime}분 읽기</span>
                 </div>
                 <h3>${escapeHtml(post.title)}</h3>
                 <p>${escapeHtml(post.description)}</p>
-                <div class="tags">
-${tags}
-                </div>
               </div>
             </a>`;
 }
