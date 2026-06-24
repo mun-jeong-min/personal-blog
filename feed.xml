@@ -4,7 +4,14 @@
   <title>Panda Blog</title>
   <link>https://mun-jeong-min.github.io/personal-blog/</link>
   <description>Panda Blog RSS feed</description>
-  <lastBuildDate>Fri, 19 Jun 2026 00:00:00 GMT</lastBuildDate>
+  <lastBuildDate>Wed, 24 Jun 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>에이전트와의 대화는 적용될 때 지능이 된다</title>
+    <link>https://mun-jeong-min.github.io/personal-blog/posts/agent-augmented-intellect.html</link>
+    <guid>https://mun-jeong-min.github.io/personal-blog/posts/agent-augmented-intellect.html</guid>
+    <pubDate>Wed, 24 Jun 2026 00:00:00 GMT</pubDate>
+    <description>더글라스 엥겔바트의 Augmenting Human Intellect를 공부하며, AI 에이전트를 답변기가 아니라 사고와 업무 방식을 훈련시키는 시스템으로 써야겠다고 정리한 회고</description>
+  </item>
   <item>
     <title>AI를 잘 쓴다는 건, AI를 잘 의심한다는 것</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/ai-alignment-mutual-suspicion.html</link>
