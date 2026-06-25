@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
   <title>Panda Blog</title>
   <link>https://mun-jeong-min.github.io/personal-blog/</link>
+  <atom:link href="https://mun-jeong-min.github.io/personal-blog/feed.xml" rel="self" type="application/rss+xml" />
   <description>Panda Blog RSS feed</description>
+  <language>ko-KR</language>
   <lastBuildDate>Wed, 24 Jun 2026 00:00:00 GMT</lastBuildDate>
   <item>
     <title>에이전트와의 대화는 적용될 때 지능이 된다</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/agent-augmented-intellect.html</link>
-    <guid>https://mun-jeong-min.github.io/personal-blog/posts/agent-augmented-intellect.html</guid>
+    <guid isPermaLink="true">https://mun-jeong-min.github.io/personal-blog/posts/agent-augmented-intellect.html</guid>
     <pubDate>Wed, 24 Jun 2026 00:00:00 GMT</pubDate>
     <description>더글라스 엥겔바트의 Augmenting Human Intellect를 공부하며, AI 에이전트를 답변기가 아니라 사고와 업무 방식을 훈련시키는 시스템으로 써야겠다고 정리한 회고</description>
   </item>
   <item>
     <title>AI를 잘 쓴다는 건, AI를 잘 의심한다는 것</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/ai-alignment-mutual-suspicion.html</link>
-    <guid>https://mun-jeong-min.github.io/personal-blog/posts/ai-alignment-mutual-suspicion.html</guid>
+    <guid isPermaLink="true">https://mun-jeong-min.github.io/personal-blog/posts/ai-alignment-mutual-suspicion.html</guid>
     <pubDate>Thu, 18 Jun 2026 00:00:00 GMT</pubDate>
     <description>The Alignment Problem을 스터디하며, AI 에이전트를 구현 도구에서 같이 고민하는 비서이자 친구처럼 쓰게 된 변화와 AI를 의심하는 태도에 대해 쓴 회고</description>
   </item>
   <item>
     <title>AI 에이전트 시대, 학습 매체는 무엇이 달라져야 할까</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/post.html</link>
-    <guid>https://mun-jeong-min.github.io/personal-blog/posts/post.html</guid>
+    <guid isPermaLink="true">https://mun-jeong-min.github.io/personal-blog/posts/post.html</guid>
     <pubDate>Wed, 17 Jun 2026 00:00:00 GMT</pubDate>
     <description>Andy Matuschak의 Why books don&#039;t work를 스터디하며, AI 에이전트 시대의 학습 매체가 어떻게 달라져야 하는지 생각해본 기록</description>
   </item>

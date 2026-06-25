@@ -42,6 +42,31 @@
       }
     </script>
     <style>
+      body {
+        margin: 0;
+        background: #fff;
+      }
+
+      .post-home-link {
+        display: inline-flex;
+        margin: 24px 0 0 max(18px, calc((100% - 700px) / 2));
+        border-radius: 8px;
+        padding: 8px 10px;
+        color: #4b5563;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 0.94rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .post-home-link:hover,
+      .post-home-link:focus-visible {
+        background: #f1f5f9;
+        color: #111;
+        outline: 3px solid #2f6fed;
+        outline-offset: 3px;
+      }
+
       .blog-post {
         max-width: 700px;
         margin: 0 auto;
@@ -133,6 +158,8 @@
     </style>
   </head>
   <body>
+    <a class="post-home-link" href="../">Panda Blog 홈</a>
+    <main>
     <article class="blog-post">
       <header class="post-header">
         <p class="post-kicker">AI 에이전트 회고</p>
@@ -282,5 +309,6 @@
 
       <p class="post-closing">아마도 AI와 계속 대화하면서, 서로의 맥락을 맞춰가고, 그럴듯한 답변 뒤에 빠진 것을 같이 확인하는 사람일 것이다. 나는 그게 앞으로 에이전트를 쓰는 꽤 중요한 태도가 될 것 같다.</p>
     </article>
+    </main>
   </body>
 </html>

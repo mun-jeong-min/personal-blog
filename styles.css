@@ -51,6 +51,13 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -218,10 +225,20 @@ h1 {
 }
 
 .search-box button:hover,
-.search-box button:focus-visible,
 .post-card:focus-visible {
   border-color: var(--accent);
-  outline: none;
+}
+
+.post-card:focus-visible {
+  box-shadow: 0 0 0 3px rgba(23, 126, 137, 0.22);
+}
+
+.result-status {
+  min-height: 1.4em;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .primary-button,
@@ -290,6 +307,11 @@ h1 {
   gap: 24px;
   padding: 18px 0 22px;
   border-top: 1px solid var(--line);
+}
+
+#posts,
+#about {
+  scroll-margin-top: 96px;
 }
 
 .section-bar h2,
@@ -499,5 +521,15 @@ h1 {
 
   .search-box {
     display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .post-card:hover {
+    transform: none;
   }
 }

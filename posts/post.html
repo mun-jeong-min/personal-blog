@@ -42,6 +42,31 @@
       }
     </script>
     <style>
+      body {
+        margin: 0;
+        background: #fff;
+      }
+
+      .post-home-link {
+        display: inline-flex;
+        margin: 24px 0 0 max(18px, calc((100% - 700px) / 2));
+        border-radius: 8px;
+        padding: 8px 10px;
+        color: #4b5563;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 0.94rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .post-home-link:hover,
+      .post-home-link:focus-visible {
+        background: #f1f5f9;
+        color: #111;
+        outline: 3px solid #2f6fed;
+        outline-offset: 3px;
+      }
+
       .blog-post {
         max-width: 700px;
         margin: 0 auto;
@@ -142,6 +167,8 @@
     </style>
   </head>
   <body>
+    <a class="post-home-link" href="../">Panda Blog 홈</a>
+    <main>
     <article class="blog-post">
       <header class="post-header">
         <p class="post-kicker">스터디 기록</p>
@@ -226,5 +253,6 @@
 
   <p class="post-closing">그런 관점에서 AI 에이전트를 단순한 답변기가 아니라 학습 에이전트로 바라보면, 앞으로 해볼 수 있는 교육 방식이 꽤 많아질 것 같다. 그리고 좋은 교육을 고민하는 사람들에게도 이 변화는 꽤 중요한 힌트가 될 수 있을 것 같다.</p>
     </article>
+    </main>
   </body>
 </html>

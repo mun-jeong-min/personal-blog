@@ -14,7 +14,19 @@ const clearSearch = document.querySelector("#clearSearch");
 const emptyState = document.querySelector("#emptyState");
 const postSummary = document.querySelector("#postSummary");
 const postCount = document.querySelector("#postCount");
+const resultStatus = document.querySelector("#resultStatus");
 const year = document.querySelector("#year");
+
+assertRequiredElements({
+  postList,
+  searchInput,
+  clearSearch,
+  emptyState,
+  postSummary,
+  postCount,
+  resultStatus,
+  year,
+});
 
 year.textContent = new Date().getFullYear();
 state.query = new URLSearchParams(window.location.search).get("q") || "";
@@ -25,14 +37,22 @@ init();
 async function init() {
   try {
     const paths = await loadPostPaths();
-    const posts = await Promise.all(paths.map(loadPost));
-    state.posts = posts
-      .filter(Boolean)
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
+    const settledPosts = await Promise.allSettled(paths.map(loadPost));
+    const posts = settledPosts
+      .filter((result) => result.status === "fulfilled" && result.value)
+      .map((result) => result.value)
+      .sort(sortPostsByDateDesc);
+
+    if (paths.length > 0 && posts.length === 0) {
+      throw new Error("No posts could be loaded.");
+    }
+
+    state.posts = posts;
     renderOverview();
     renderPosts();
   } catch (error) {
-    postList.innerHTML = `<p class="empty-state">글 목록을 불러오지 못했습니다.</p>`;
+    postSummary.textContent = "글 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.";
+    resultStatus.textContent = "글 목록을 불러오지 못했습니다.";
     console.error(error);
   }
 }
@@ -50,7 +70,7 @@ function renderOverview() {
 
 async function loadPostPaths() {
   const manifestPaths = await loadManifestPostPaths();
-  if (manifestPaths.length > 0) return manifestPaths;
+  if (manifestPaths !== null) return manifestPaths;
 
   return loadGitHubPostPaths();
 }
@@ -58,12 +78,14 @@ async function loadPostPaths() {
 async function loadManifestPostPaths() {
   try {
     const manifestResponse = await fetch("posts.json", { cache: "no-store" });
-    if (!manifestResponse.ok) return [];
+    if (!manifestResponse.ok) return null;
     const paths = await manifestResponse.json();
-    return Array.isArray(paths) ? paths : [];
+    return Array.isArray(paths)
+      ? paths.filter((entry) => typeof entry === "string" && /^posts\/[^/]+\.html$/i.test(entry))
+      : null;
   } catch (error) {
     console.warn("posts.json lookup failed. Falling back to GitHub.", error);
-    return [];
+    return null;
   }
 }
 
@@ -103,7 +125,7 @@ async function loadPost(path) {
     title: meta.title || slug,
     date: meta.date || "",
     description: meta.description || "",
-    cover: meta.cover || "",
+    cover: resolvePostAsset(path, meta.cover || ""),
     readingTime: estimateReadingTime(raw),
   };
 }
@@ -144,19 +166,19 @@ function renderPosts() {
       ? "아직 등록된 글이 없습니다. posts 폴더에 HTML 파일을 올리면 자동으로 목록에 표시됩니다."
       : "검색 조건에 맞는 글이 없습니다.";
   clearSearch.hidden = state.query.trim() === "";
+  resultStatus.textContent = renderResultStatus(filtered.length);
   postList.innerHTML = filtered.map((post, index) => renderPostCard(post, index === 0 && state.query.trim() === "")).join("");
 }
 
 function renderPostCard(post, isLatest = false) {
   return `
-    <a class="post-card" href="${escapeAttribute(post.path)}" target="_blank" rel="noreferrer" data-slug="${escapeHtml(post.slug)}">
+    <a class="post-card" href="${escapeAttribute(post.path)}" data-slug="${escapeHtml(post.slug)}">
       ${post.cover ? `<img src="${escapeAttribute(post.cover)}" alt="">` : ""}
       <div class="post-card-body">
         <div class="post-meta">
           <time datetime="${escapeAttribute(post.date)}">${formatDate(post.date)}</time>
           ${isLatest ? `<span class="latest-badge">최신</span>` : ""}
           <span>${post.readingTime}분 읽기</span>
-          <span>새 탭에서 열기</span>
         </div>
         <h3>${escapeHtml(post.title)}</h3>
         <p>${escapeHtml(post.description)}</p>
@@ -165,13 +187,20 @@ function renderPostCard(post, isLatest = false) {
   `;
 }
 
+function sortPostsByDateDesc(a, b) {
+  const first = parseDate(b.date)?.getTime() ?? 0;
+  const second = parseDate(a.date)?.getTime() ?? 0;
+  return first - second || a.path.localeCompare(b.path);
+}
+
 function formatDate(value) {
-  if (!value) return "";
+  const date = parseDate(value);
+  if (!date) return "";
   return new Intl.DateTimeFormat("ko-KR", {
     year: "numeric",
     month: "long",
     day: "numeric",
-  }).format(new Date(value));
+  }).format(date);
 }
 
 function escapeHtml(value) {
@@ -189,15 +218,57 @@ function escapeAttribute(value) {
 
 searchInput.addEventListener("input", (event) => {
   state.query = event.target.value;
+  updateSearchUrl();
   renderPosts();
 });
 
 clearSearch.addEventListener("click", () => {
   state.query = "";
   searchInput.value = "";
+  updateSearchUrl();
   searchInput.focus();
   renderPosts();
 });
+
+function renderResultStatus(count) {
+  if (state.posts.length === 0) return "등록된 글이 없습니다.";
+  const query = state.query.trim();
+  if (!query) return `전체 ${count}개의 글을 보여주고 있습니다.`;
+  return `"${query}" 검색 결과 ${count}개를 보여주고 있습니다.`;
+}
+
+function updateSearchUrl() {
+  const url = new URL(window.location.href);
+  const query = state.query.trim();
+  if (query) {
+    url.searchParams.set("q", query);
+  } else {
+    url.searchParams.delete("q");
+  }
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function resolvePostAsset(postPath, assetPath) {
+  if (!assetPath) return "";
+  if (/^(https?:)?\/\//i.test(assetPath) || assetPath.startsWith("/")) return assetPath;
+  const base = postPath.slice(0, postPath.lastIndexOf("/") + 1);
+  return `${base}${assetPath}`;
+}
+
+function parseDate(value) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function assertRequiredElements(elements) {
+  const missing = Object.entries(elements)
+    .filter(([, element]) => !element)
+    .map(([name]) => name);
+
+  if (missing.length > 0) {
+    throw new Error(`Missing required page elements: ${missing.join(", ")}`);
+  }
+}
 
 function estimateReadingTime(html) {
   const text = html
