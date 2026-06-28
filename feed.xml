@@ -6,7 +6,14 @@
   <atom:link href="https://mun-jeong-min.github.io/personal-blog/feed.xml" rel="self" type="application/rss+xml" />
   <description>Panda Blog RSS feed</description>
   <language>ko-KR</language>
-  <lastBuildDate>Wed, 24 Jun 2026 00:00:00 GMT</lastBuildDate>
+  <lastBuildDate>Sun, 28 Jun 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>에이전트가 검색했다는 말을 너무 쉽게 믿고 있었다</title>
+    <link>https://mun-jeong-min.github.io/personal-blog/posts/agent-web-search-trust.html</link>
+    <guid isPermaLink="true">https://mun-jeong-min.github.io/personal-blog/posts/agent-web-search-trust.html</guid>
+    <pubDate>Sun, 28 Jun 2026 00:00:00 GMT</pubDate>
+    <description>AI 에이전트가 웹을 검색했다고 말할 때, 답변만이 아니라 출처와 실제 접근 과정을 확인해야겠다고 느낀 개인적인 회고</description>
+  </item>
   <item>
     <title>에이전트와의 대화는 적용될 때 지능이 된다</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/agent-augmented-intellect.html</link>

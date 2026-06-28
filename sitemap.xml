@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mun-jeong-min.github.io/personal-blog/</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-06-28</lastmod>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://mun-jeong-min.github.io/personal-blog/posts/agent-web-search-trust.html</loc>
+    <lastmod>2026-06-28</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mun-jeong-min.github.io/personal-blog/posts/agent-augmented-intellect.html</loc>
