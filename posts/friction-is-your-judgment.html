@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>구현은 빨라졌고, 판단은 더 선명해졌다</title>
+    <meta name="description" content="The Friction is Your Judgment를 공부하며, AI 코딩 에이전트가 구현 속도를 높일수록 사람이 직접 판단해야 하는 지점이 더 중요해진다는 생각을 정리한 회고">
+    <meta name="date" content="2026-07-08">
+    <meta name="tags" content="AI, AI 에이전트, 코딩 에이전트, 개발 문화, 코드 리뷰, 보안, 아키텍처, 업무 회고">
+    <meta name="cover" content="">
+    <meta name="robots" content="index, follow">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Panda Blog">
+    <meta property="og:title" content="구현은 빨라졌고, 판단은 더 선명해졌다">
+    <meta property="og:description" content="The Friction is Your Judgment를 공부하며, AI 코딩 에이전트가 구현 속도를 높일수록 사람이 직접 판단해야 하는 지점이 더 중요해진다는 생각을 정리한 회고">
+    <meta property="og:url" content="https://mun-jeong-min.github.io/personal-blog/posts/friction-is-your-judgment.html">
+    <meta property="article:published_time" content="2026-07-08">
+    <meta property="article:modified_time" content="2026-07-08">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="구현은 빨라졌고, 판단은 더 선명해졌다">
+    <meta name="twitter:description" content="The Friction is Your Judgment를 공부하며, AI 코딩 에이전트가 구현 속도를 높일수록 사람이 직접 판단해야 하는 지점이 더 중요해진다는 생각을 정리한 회고">
+    <link rel="canonical" href="https://mun-jeong-min.github.io/personal-blog/posts/friction-is-your-judgment.html">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "구현은 빨라졌고, 판단은 더 선명해졌다",
+        "description": "The Friction is Your Judgment를 공부하며, AI 코딩 에이전트가 구현 속도를 높일수록 사람이 직접 판단해야 하는 지점이 더 중요해진다는 생각을 정리한 회고",
+        "datePublished": "2026-07-08",
+        "dateModified": "2026-07-08",
+        "url": "https://mun-jeong-min.github.io/personal-blog/posts/friction-is-your-judgment.html",
+        "mainEntityOfPage": "https://mun-jeong-min.github.io/personal-blog/posts/friction-is-your-judgment.html",
+        "author": {
+          "@type": "Person",
+          "name": "Panda Blog"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Panda Blog"
+        },
+        "inLanguage": "ko-KR"
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        background: #fff;
+      }
+
+      .post-home-link {
+        display: inline-flex;
+        margin: 24px 0 0 max(18px, calc((100% - 700px) / 2));
+        border-radius: 8px;
+        padding: 8px 10px;
+        color: #4b5563;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 0.94rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .post-home-link:hover,
+      .post-home-link:focus-visible {
+        background: #f1f5f9;
+        color: #111;
+        outline: 3px solid #2f6fed;
+        outline-offset: 3px;
+      }
+
+      .blog-post {
+        max-width: 700px;
+        margin: 0 auto;
+        color: #242424;
+        font-family: inherit;
+        font-size: 1rem;
+        line-height: 1.9;
+        letter-spacing: 0;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+      }
+
+      .blog-post p {
+        margin: 0 0 1.28em;
+      }
+
+      .blog-post .post-header {
+        margin: 0 0 2.2em;
+        padding-bottom: 1.45em;
+        border-bottom: 1px solid #e7eaf0;
+      }
+
+      .blog-post .post-kicker {
+        margin: 0 0 0.7em;
+        color: #2f6fed;
+        font-size: 0.92em;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      .blog-post h1 {
+        margin: 0 0 0.58em;
+        color: #111;
+        font-size: 2em;
+        line-height: 1.34;
+        letter-spacing: 0;
+        word-break: keep-all;
+      }
+
+      .blog-post .post-subtitle {
+        margin: 0;
+        color: #4b5563;
+        font-size: 1.06em;
+        line-height: 1.75;
+      }
+
+      .blog-post .post-lead {
+        margin: 0 0 2.25em;
+        padding: 1.05em 1.2em;
+        border-left: 4px solid #2f6fed;
+        background: #f6f8fc;
+        color: #303846;
+        font-size: 1.03em;
+        line-height: 1.82;
+      }
+
+      .blog-post h2 {
+        margin: 2.55em 0 0.85em;
+        padding-bottom: 0.35em;
+        border-bottom: 1px solid #e7eaf0;
+        color: #171717;
+        font-size: 1.36em;
+        line-height: 1.48;
+        letter-spacing: 0;
+        word-break: keep-all;
+      }
+
+      .blog-post blockquote {
+        margin: 1.65em 0 1.9em;
+        padding: 1.05em 1.2em;
+        border-left: 4px solid #8b97a8;
+        background: #fafafa;
+        color: #333;
+      }
+
+      .blog-post blockquote p {
+        margin: 0.42em 0;
+        line-height: 1.75;
+      }
+
+      .blog-post .post-closing {
+        margin-top: 2.1em;
+        padding-top: 1.25em;
+        border-top: 1px solid #e7eaf0;
+        color: #303846;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="post-home-link" href="../">← 글 목록</a>
+    <main>
+      <article class="blog-post">
+      <header class="post-header">
+        <p class="post-kicker">AI 에이전트 업무 회고</p>
+        <h1>구현은 빨라졌고, 판단은 더 선명해졌다</h1>
+        <p class="post-subtitle">AI 코딩 에이전트가 마찰을 줄여줄수록, 사람이 직접 멈춰서 판단해야 하는 지점은 오히려 더 중요해진다는 생각.</p>
+      </header>
+
+      <p class="post-lead">Armin Ronacher와 Cristina Poncela Cubeiro / Earendil의 「The Friction is Your Judgment」를 공부하면서, AI 에이전트를 많이 쓸수록 내가 책임져야 할 판단의 자리가 더 분명해진다는 생각이 들었다.</p>
+
+      <p>Armin Ronacher와 Cristina Poncela Cubeiro / Earendil의 「The Friction is Your Judgment」를 공부했다.</p>
+
+      <p>처음 제목을 봤을 때부터 조금 멈칫했다. 보통 AI 도구를 이야기할 때는 마찰을 줄이는 것이 좋은 일처럼 말한다. 더 빨리 만들고, 더 빨리 고치고, 더 빨리 배포하는 것이 자연스럽게 좋은 방향처럼 느껴진다.</p>
+
+      <p>나도 그렇게 생각한 부분이 있었다. 에이전트가 반복 작업을 대신해주고, 막히는 부분을 풀어주고, 초안을 빠르게 만들어주면 당연히 효율이 좋아진다고 느꼈다.</p>
+
+      <p>그런데 이 발표를 공부하면서 생각이 조금 바뀌었다.</p>
+
+      <p>모든 마찰을 없애는 것이 좋은 것은 아니었다. 어떤 마찰은 단순한 비효율이 아니라, 사람이 멈춰서 판단하고 책임지는 지점이었다.</p>
+
+      <p>AI 에이전트를 쓰면서 업무 속도는 빨라질 수 있다. 하지만 속도가 빨라질수록 내가 직접 판단해야 하는 일도 더 선명하게 드러난다. 특히 보안적인 부분이나 큰 그림을 결정해야 하는 부분에서는 더 그랬다.</p>
+
+      <p>에이전트가 코드를 만들 수는 있다. 하지만 그 코드가 지금 우리 업무에 맞는지, 이 방향으로 가도 되는지, 나중에 문제가 생겼을 때 책임질 수 있는지는 결국 내가 판단해야 했다.</p>
+
+      <h2>마찰 없는 흐름이 항상 좋은 것은 아니었다</h2>
+
+      <p>발표는 "ship without friction"이라는 문구를 비판적으로 본다.</p>
+
+      <p>처음에는 매력적인 말처럼 들린다. 개발 과정에서 불필요하게 막히는 지점을 줄이고, 아이디어를 빠르게 제품으로 옮기는 것은 분명 중요하다. 특히 AI 코딩 에이전트는 이런 흐름을 더 강하게 만든다.</p>
+
+      <p>예전에는 내가 직접 오래 찾아보고, 코드를 짜고, 에러를 하나씩 고쳐야 했다. 지금은 에이전트에게 설명하면 초안이 금방 나온다. 테스트를 추가해달라고 하면 테스트도 만든다. 에러 로그를 붙여넣으면 원인을 추측하고 수정안도 제시한다.</p>
+
+      <p>이 경험은 꽤 중독적이다.</p>
+
+      <p>한 번 더 프롬프트하면 해결될 것 같다. 조금만 더 맡기면 더 나은 결과가 나올 것 같다. 산출물이 빠르게 쌓이기 때문에 내가 실제로 더 효율적으로 일하고 있다고 느끼기 쉽다.</p>
+
+      <p>하지만 산출물이 많아지는 것과 내가 더 잘 판단하고 있다는 것은 다른 문제다.</p>
+
+      <p>코드가 많이 생길수록 그것을 이해하고, 검토하고, 선택하고, 책임지는 일도 같이 늘어난다. 그런데 사람의 리뷰 능력이나 설계 판단 능력은 코드 생성 속도만큼 빨라지지 않는다.</p>
+
+      <p>이 지점에서 병목이 바뀐다.</p>
+
+      <blockquote>
+        <p>예전에는 구현 자체가 병목이었다면, AI 이후에는 판단과 선택이 병목이 될 수 있다.</p>
+      </blockquote>
+
+      <h2>작동하는 코드와 책임질 수 있는 코드는 다르다</h2>
+
+      <p>AI 에이전트는 보통 "작동하게 만들기"에 강하다.</p>
+
+      <p>테스트가 실패하면 통과하게 만들고, 막힌 부분이 있으면 우회하고, 에러가 나면 에러가 나지 않는 방향으로 고친다. 이것 자체는 큰 장점이다. 실제로 개발을 하다 보면 일단 실행되게 만드는 힘이 필요할 때가 많다.</p>
+
+      <p>하지만 작동한다고 해서 좋은 코드는 아니다.</p>
+
+      <p>좋은 코드는 의도에 맞아야 하고, 유지보수할 수 있어야 하고, 실패가 명확해야 한다. 운영 환경에서 안전해야 하고, 보안적으로 문제가 없어야 하고, 나중에 사람이 다시 읽어도 이해할 수 있어야 한다.</p>
+
+      <p>발표에서 나온 설정 파일 예시가 인상적이었다.</p>
+
+      <p>설정 파일을 읽지 못했을 때 에러를 내지 않고 기본값으로 계속 실행하게 만들면, 겉보기에는 프로그램이 잘 작동하는 것처럼 보일 수 있다. 하지만 실제 운영 환경에서는 잘못된 설정으로 데이터가 쌓이거나, 나중에 더 큰 문제로 이어질 수 있다.</p>
+
+      <p>사람은 이런 코드를 보면서 "뭔가 찝찝한데"라는 감각을 느낄 수 있다. 실패해야 할 곳에서 조용히 넘어가는 것이 위험하다는 걸 맥락으로 알아차릴 수 있다.</p>
+
+      <p>하지만 에이전트에게 그 감각을 기대하기는 어렵다.</p>
+
+      <p>에이전트는 목표를 "에러 없이 실행되게 만들기"로 이해할 수 있다. 그러면 실패를 명확히 드러내는 코드보다, 실패를 숨기고 계속 진행하는 코드를 만들 수도 있다.</p>
+
+      <p>그래서 사람이 봐야 한다. 단순히 테스트가 통과했는지만 보는 것이 아니라, 이 코드가 어떤 실패를 숨기고 있는지 봐야 한다.</p>
+
+      <h2>내가 멈춰야 하는 지점이 보였다</h2>
+
+      <p>업무를 진행하면서도 비슷한 감각을 느낀 적이 있다.</p>
+
+      <p>에이전트가 할 수 있는 일은 분명 많다. 초안을 만들고, 반복 작업을 줄이고, 코드를 정리하고, 내가 놓친 대안을 제시해준다. 혼자 생각하면 오래 걸렸을 부분을 빠르게 구조화해주기도 한다.</p>
+
+      <p>그런데 일을 진행하다 보면 에이전트가 할 수 없는 지점이 생긴다.</p>
+
+      <p>특히 보안적인 부분이나 큰 그림을 정해야 하는 부분에서 그랬다.</p>
+
+      <p>이 권한을 이렇게 열어도 되는지, 이 흐름이 나중에 운영 환경에서 안전한지, 지금 이 방향으로 구현을 밀고 가도 되는지 같은 판단은 단순한 코드 생성 문제가 아니었다.</p>
+
+      <p>큰 그림도 마찬가지다.</p>
+
+      <p>에이전트는 주어진 요청 안에서 그럴듯한 답을 만들 수 있다. 하지만 지금 우리가 풀어야 하는 문제가 정말 이것인지, 이 방식이 팀의 맥락에 맞는지, 장기적으로 유지보수 가능한 방향인지는 사람이 봐야 한다.</p>
+
+      <p>그때 느꼈다.</p>
+
+      <blockquote>
+        <p>AI 에이전트는 내 생각을 대신하는 존재가 아니다. 내 상황과 세계관을 공유하고, 대화를 통해 아이디어를 구체화하고, 실행을 도와주는 도구에 가깝다.</p>
+      </blockquote>
+
+      <p>하지만 중요한 병목 지점에서는 내가 멈춰야 한다. 그리고 내가 선택해야 한다.</p>
+
+      <h2>지침보다 강제되는 규칙이 필요하다</h2>
+
+      <p>발표에서 또 인상적이었던 부분은 agent-legible codebase라는 관점이었다.</p>
+
+      <p>AI 에이전트가 잘 읽고 실수하기 어려운 코드베이스가 필요하다는 이야기로 이해했다. 사람이 읽기 좋은 코드도 중요하지만, 이제는 에이전트가 구조를 잘 찾고, 잘못된 방향으로 덜 가도록 만드는 것도 중요해진다.</p>
+
+      <p>이를 위해서는 모듈을 명확히 나누고, 코드 흐름을 단순하게 유지하고, 숨은 magic을 줄여야 한다. 복잡성은 명확한 추상화 뒤로 밀고, 에이전트가 어디를 봐야 하는지 찾기 쉬운 구조를 만들어야 한다.</p>
+
+      <p>여기서 AGENTS.md 같은 지침 파일도 중요하다.</p>
+
+      <p>하지만 지침만으로는 부족할 수 있다. 지침은 에이전트가 놓칠 수 있고, 많아질수록 서로 충돌하거나 우선순위가 흐려질 수 있다.</p>
+
+      <p>그래서 가능한 규칙은 기계적으로 강제해야 한다는 말이 와닿았다.</p>
+
+      <p>bare catch-all을 금지하거나, SQL 접근을 하나의 query interface로 통일하거나, UI input은 공통 primitive component를 쓰게 하거나, dynamic import를 금지하거나, strict linting과 타입 검사, 테스트를 강하게 거는 식이다.</p>
+
+      <p>핵심은 에이전트가 규칙을 기억하길 기대하는 것이 아니다.</p>
+
+      <blockquote>
+        <p>규칙을 어기면 자동으로 실패하게 만드는 것이다.</p>
+      </blockquote>
+
+      <p>사람의 판단이 필요한 곳에는 사람이 멈추게 하고, 반복되는 규칙은 시스템이 막아주게 해야 한다. 그래야 에이전트와 사람이 서로 다른 일을 맡을 수 있다.</p>
+
+      <h2>없애야 할 마찰과 남겨야 할 마찰</h2>
+
+      <p>물론 모든 마찰이 좋은 것은 아니다.</p>
+
+      <p>반복적이고 의미 없는 절차는 줄이는 것이 맞다. 매번 똑같이 해야 하는 정리 작업, 형식 맞추기, 단순한 테스트 보조, 초안 작성, 재현 케이스 만들기 같은 일은 AI가 잘 도와줄 수 있다.</p>
+
+      <p>이런 부분의 마찰을 줄이면 사람은 더 중요한 생각에 시간을 쓸 수 있다.</p>
+
+      <p>하지만 어떤 마찰은 다시 넣어야 한다.</p>
+
+      <p>DB migration, 권한 변경, 보안 관련 변경, dependency 추가, production 데이터에 영향을 주는 작업, 아키텍처 결정, 장기 유지보수에 영향을 주는 결정은 다르다.</p>
+
+      <p>이런 부분은 속도를 내기 전에 멈춰야 한다.</p>
+
+      <p>왜 이 변경이 필요한지, 실패하면 어떤 일이 생기는지, 되돌릴 수 있는지, 누가 책임질 수 있는지, 지금 결정해도 되는지 확인해야 한다.</p>
+
+      <p>이때의 마찰은 방해물이 아니다.</p>
+
+      <p>사람이 판단하고 있다는 증거에 가깝다.</p>
+
+      <h2>나는 에이전트를 어떻게 쓰고 싶은가</h2>
+
+      <p>이 발표를 공부하고 나서 AI 에이전트를 덜 써야겠다는 생각이 든 것은 아니다.</p>
+
+      <p>오히려 더 잘 써야겠다는 생각이 들었다.</p>
+
+      <p>에이전트에게 맡기기 좋은 일은 계속 맡기고 싶다. 초안을 만들고, 대안을 뽑고, 반복 작업을 줄이고, 테스트를 보조하고, 아이디어를 구체화하는 일에는 에이전트가 큰 도움이 된다.</p>
+
+      <p>다만 이제는 더 의식적으로 나누고 싶다.</p>
+
+      <p>에이전트가 할 수 있는 일과 내가 판단해야 하는 일을 섞어버리지 않는 것이다.</p>
+
+      <p>무엇을 만들지 결정하는 일, 어떤 방향이 좋은지 선택하는 일, 품질 기준을 정하는 일, 보안과 권한을 판단하는 일, 운영 리스크를 보는 일, 아키텍처를 결정하는 일, 최종 승인하는 일은 사람의 몫으로 남겨야 한다.</p>
+
+      <p>AI를 잘 쓰는 방식은 전부 맡기는 것이 아닌 것 같다.</p>
+
+      <p>대화를 통해 생각을 구체화하고, 실행은 도움받되, 판단은 사람이 책임지는 방식에 더 가깝다.</p>
+
+      <h2>마찰은 내가 책임지는 자리다</h2>
+
+      <p>「The Friction is Your Judgment」라는 제목은 결국 이렇게 이해됐다.</p>
+
+      <p>마찰은 단순한 방해물이 아니다. 어떤 마찰은 사람이 멈춰서 생각하고, 검토하고, 선택하고, 책임지는 장치다.</p>
+
+      <p>AI 에이전트 시대에는 구현이 더 쉬워질 수 있다. 하지만 구현이 쉬워질수록 "이걸 해도 되는가"라는 질문은 더 중요해진다.</p>
+
+      <p>예전에는 코드 작성이 느려서 자연스럽게 멈추는 시간이 있었다면, 이제는 의도적으로 멈추는 장치가 필요할지도 모른다.</p>
+
+      <p>보안적인 부분에서 멈추고, 큰 그림에서 멈추고, 나중에 책임져야 할 결정 앞에서 멈추는 것.</p>
+
+      <p>그 마찰을 불편하다고만 보면 중요한 판단을 놓칠 수 있다.</p>
+
+      <p>나는 앞으로 에이전트를 더 많이 쓸 것 같다. 하지만 더 많이 쓸수록, 내가 직접 판단해야 하는 지점도 더 분명히 남겨두고 싶다.</p>
+
+      <p>에이전트가 빠르게 밀어주는 힘은 좋다. 다만 그 힘이 어디로 향해야 하는지는 내가 봐야 한다.</p>
+
+      <p class="post-closing">마찰은 속도를 늦추는 것이 아니라, 내가 책임지고 있다는 신호일 수 있다.</p>
+      </article>
+    </main>
+  </body>
+</html>

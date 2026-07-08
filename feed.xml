@@ -6,7 +6,14 @@
   <atom:link href="https://mun-jeong-min.github.io/personal-blog/feed.xml" rel="self" type="application/rss+xml" />
   <description>Panda Blog RSS feed</description>
   <language>ko-KR</language>
-  <lastBuildDate>Sun, 28 Jun 2026 00:00:00 GMT</lastBuildDate>
+  <lastBuildDate>Wed, 08 Jul 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>구현은 빨라졌고, 판단은 더 선명해졌다</title>
+    <link>https://mun-jeong-min.github.io/personal-blog/posts/friction-is-your-judgment.html</link>
+    <guid isPermaLink="true">https://mun-jeong-min.github.io/personal-blog/posts/friction-is-your-judgment.html</guid>
+    <pubDate>Wed, 08 Jul 2026 00:00:00 GMT</pubDate>
+    <description>The Friction is Your Judgment를 공부하며, AI 코딩 에이전트가 구현 속도를 높일수록 사람이 직접 판단해야 하는 지점이 더 중요해진다는 생각을 정리한 회고</description>
+  </item>
   <item>
     <title>에이전트가 검색했다는 말을 너무 쉽게 믿고 있었다</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/agent-web-search-trust.html</link>
