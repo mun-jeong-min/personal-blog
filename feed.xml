@@ -6,7 +6,14 @@
   <atom:link href="https://mun-jeong-min.github.io/personal-blog/feed.xml" rel="self" type="application/rss+xml" />
   <description>Panda Blog RSS feed</description>
   <language>ko-KR</language>
-  <lastBuildDate>Tue, 21 Jul 2026 00:00:00 GMT</lastBuildDate>
+  <lastBuildDate>Sun, 26 Jul 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>경력보다 학습이 실력을 만든다는 말</title>
+    <link>https://mun-jeong-min.github.io/personal-blog/posts/together-growing-learning-loop.html</link>
+    <guid isPermaLink="true">https://mun-jeong-min.github.io/personal-blog/posts/together-growing-learning-loop.html</guid>
+    <pubDate>Sun, 26 Jul 2026 00:00:00 GMT</pubDate>
+    <description>김창준의 『함께 자라기』를 공부하며, 개인의 의도적 수련과 팀의 협업, 애자일한 업무 방식이 하나의 학습 구조로 이어진다는 생각을 정리한 기록</description>
+  </item>
   <item>
     <title>스킬이 많다고 일을 잘하는 것은 아니었다</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/working-well-is-not-a-skill.html</link>
