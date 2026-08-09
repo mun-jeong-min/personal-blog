@@ -6,7 +6,14 @@
   <atom:link href="https://mun-jeong-min.github.io/personal-blog/feed.xml" rel="self" type="application/rss+xml" />
   <description>Panda Blog RSS feed</description>
   <language>ko-KR</language>
-  <lastBuildDate>Sun, 26 Jul 2026 00:00:00 GMT</lastBuildDate>
+  <lastBuildDate>Sun, 09 Aug 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>AI에게 구현을 맡기되 판단은 남겨두는 법</title>
+    <link>https://mun-jeong-min.github.io/personal-blog/posts/ai-agent-judgment-loop.html</link>
+    <guid isPermaLink="true">https://mun-jeong-min.github.io/personal-blog/posts/ai-agent-judgment-loop.html</guid>
+    <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
+    <description>『생각을 맡기는 사람들: 호모 브레인리스』를 읽으며, AI 에이전트에게 구현을 맡기더라도 문제 정의와 판단의 기준은 내가 붙들고 있어야 한다는 생각을 정리한 기록.</description>
+  </item>
   <item>
     <title>경력보다 학습이 실력을 만든다는 말</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/together-growing-learning-loop.html</link>
