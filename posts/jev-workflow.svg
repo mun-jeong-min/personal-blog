@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">기존 언어 모델과 Jev의 처리 방식 비교</title>
+  <desc id="desc">언어 모델은 텍스트를 순차적으로 생성하고 애플리케이션이 파싱하는 반면, Jev는 구조화된 상태에서 타입이 정해진 판단과 확률을 반환한다.</desc>
+  <rect width="1200" height="420" fill="#ffffff"/>
+  <style>
+    .label{font:700 25px sans-serif;fill:#171717}.text{font:20px sans-serif;fill:#303846}.small{font:18px sans-serif;fill:#667085}.box{fill:#f6f8fc;stroke:#d8dee9;stroke-width:2}.blue{fill:#eaf1ff;stroke:#2f6fed;stroke-width:2}.green{fill:#ecf8f0;stroke:#4a9b67;stroke-width:2}.arrow{stroke:#8b97a8;stroke-width:3;fill:none;marker-end:url(#arrow)}
+  </style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#8b97a8"/></marker></defs>
+  <text x="70" y="55" class="label">기존 LLM</text>
+  <rect x="60" y="90" width="220" height="90" rx="12" class="box"/><text x="170" y="127" text-anchor="middle" class="text">상태·프롬프트</text><text x="170" y="157" text-anchor="middle" class="small">긴 텍스트 입력</text>
+  <path d="M280 135 H365" class="arrow"/>
+  <rect x="365" y="90" width="220" height="90" rx="12" class="blue"/><text x="475" y="127" text-anchor="middle" class="text">토큰을 순차 생성</text><text x="475" y="157" text-anchor="middle" class="small">한 토큰씩 이어 붙임</text>
+  <path d="M585 135 H670" class="arrow"/>
+  <rect x="670" y="90" width="220" height="90" rx="12" class="box"/><text x="780" y="127" text-anchor="middle" class="text">문자열 응답</text><text x="780" y="157" text-anchor="middle" class="small">파싱·검증 필요</text>
+  <path d="M890 135 H975" class="arrow"/>
+  <rect x="975" y="90" width="165" height="90" rx="12" class="box"/><text x="1057" y="127" text-anchor="middle" class="text">코드</text><text x="1057" y="157" text-anchor="middle" class="small">오류 가능성</text>
+  <text x="70" y="245" class="label">Jev / System One</text>
+  <rect x="60" y="280" width="220" height="90" rx="12" class="box"/><text x="170" y="317" text-anchor="middle" class="text">구조화된 상태</text><text x="170" y="347" text-anchor="middle" class="small">텍스트·데이터·맥락</text>
+  <path d="M280 325 H365" class="arrow"/>
+  <rect x="365" y="280" width="220" height="90" rx="12" class="green"/><text x="475" y="317" text-anchor="middle" class="text">병렬 판단</text><text x="475" y="347" text-anchor="middle" class="small">질문을 한 번에 계산</text>
+  <path d="M585 325 H670" class="arrow"/>
+  <rect x="670" y="280" width="220" height="90" rx="12" class="green"/><text x="780" y="317" text-anchor="middle" class="text">타입이 정해진 결과</text><text x="780" y="347" text-anchor="middle" class="small">Choice · Score · Noul</text>
+  <path d="M890 325 H975" class="arrow"/>
+  <rect x="975" y="280" width="165" height="90" rx="12" class="box"/><text x="1057" y="317" text-anchor="middle" class="text">코드</text><text x="1057" y="347" text-anchor="middle" class="small">확률로 분기·검토</text>
+</svg>

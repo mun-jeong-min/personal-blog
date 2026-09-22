@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Jev 워크플로의 질문 분해 구조</title>
+  <desc id="desc">하나의 큰 자동화 작업을 프로그램 규칙과 작은 판단 질문으로 나누고, 결과 확률에 따라 코드가 다음 단계를 결정하는 구조.</desc>
+  <rect width="1200" height="420" fill="#ffffff"/>
+  <style>
+    .label{font:700 25px sans-serif;fill:#171717}.text{font:20px sans-serif;fill:#303846}.small{font:18px sans-serif;fill:#667085}.box{fill:#f6f8fc;stroke:#d8dee9;stroke-width:2}.blue{fill:#eaf1ff;stroke:#2f6fed;stroke-width:2}.green{fill:#ecf8f0;stroke:#4a9b67;stroke-width:2}.arrow{stroke:#8b97a8;stroke-width:3;fill:none;marker-end:url(#arrow)}
+  </style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#8b97a8"/></marker></defs>
+  <rect x="50" y="155" width="245" height="100" rx="12" class="box"/><text x="172" y="195" text-anchor="middle" class="text">큰 업무</text><text x="172" y="228" text-anchor="middle" class="small">“이 청구서를 처리할까?”</text>
+  <path d="M295 205 H375" class="arrow"/>
+  <rect x="375" y="70" width="205" height="90" rx="12" class="blue"/><text x="477" y="107" text-anchor="middle" class="text">Noul</text><text x="477" y="137" text-anchor="middle" class="small">읽을 수 있는가?</text>
+  <rect x="375" y="165" width="205" height="90" rx="12" class="blue"/><text x="477" y="202" text-anchor="middle" class="text">Choice</text><text x="477" y="232" text-anchor="middle" class="small">어떤 유형인가?</text>
+  <rect x="375" y="260" width="205" height="90" rx="12" class="blue"/><text x="477" y="297" text-anchor="middle" class="text">Score</text><text x="477" y="327" text-anchor="middle" class="small">위험도는 얼마인가?</text>
+  <path d="M580 115 H695 M580 210 H695 M580 305 H695" class="arrow"/>
+  <rect x="695" y="145" width="205" height="120" rx="12" class="green"/><text x="797" y="187" text-anchor="middle" class="text">확률·신뢰도</text><text x="797" y="220" text-anchor="middle" class="small">높으면 자동 처리</text><text x="797" y="247" text-anchor="middle" class="small">낮으면 사람 검토</text>
+  <path d="M900 205 H985" class="arrow"/>
+  <rect x="985" y="155" width="165" height="100" rx="12" class="box"/><text x="1067" y="195" text-anchor="middle" class="text">코드 규칙</text><text x="1067" y="228" text-anchor="middle" class="small">지급·보류·반려</text>
+</svg>

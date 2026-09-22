@@ -6,7 +6,14 @@
   <atom:link href="https://mun-jeong-min.github.io/personal-blog/feed.xml" rel="self" type="application/rss+xml" />
   <description>Panda Blog RSS feed</description>
   <language>ko-KR</language>
-  <lastBuildDate>Thu, 10 Sep 2026 00:00:00 GMT</lastBuildDate>
+  <lastBuildDate>Tue, 22 Sep 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>Jev를 써보며, AI는 답변보다 판단에 가까워질 수 있겠다고 생각했다</title>
+    <link>https://mun-jeong-min.github.io/personal-blog/posts/jev-system-one-models.html</link>
+    <guid isPermaLink="true">https://mun-jeong-min.github.io/personal-blog/posts/jev-system-one-models.html</guid>
+    <pubDate>Tue, 22 Sep 2026 00:00:00 GMT</pubDate>
+    <description>Jev를 직접 사용해보고, System One 모델의 구조와 RLCD·calibration·타입이 정해진 판단의 의미를 정리했다.</description>
+  </item>
   <item>
     <title>AX 시대의 FDE는 조직에 무엇을 남길까</title>
     <link>https://mun-jeong-min.github.io/personal-blog/posts/ax-fde-organizational-capability.html</link>
